@@ -64,6 +64,7 @@ body {
 }
 
 .start-button {
+  margin: 20px;
   background-color: #FEF2BF;
   color: #011F3F;
   font-family: 'Press Start 2P', cursive;
@@ -76,8 +77,10 @@ body {
 /* Media query for smaller screens */
 @media screen and (max-width: 600px) {
   .btn {
-    height: 25vw;
-    width: 25vw;
+    min-width: 100px;
+    min-height: 100px;
+    height: 20vw;
+    width: 20vw;
     font-size: 3vw;
     margin: 2%;
   }
