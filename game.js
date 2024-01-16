@@ -69,11 +69,32 @@ function clickResponse(color) {
     }
 }
 
-$(document).keydown(function () {
-    if (c) {
-        init();
+function changeWithWindowSize() {
+    if (window.innerWidth <= 768) {
+        // Your mobile-specific code here
+        $("#level-title").text("Tap Anywhere to Start the Game");
+        $(document).ontouchstart = function () {
+            if (c) {
+                init();
+            }
+        };
+    } else {
+        // Code for non-mobile devices
+        $("#level-title").text("Press Any Key to Start")
+        $(document).keydown(function () {
+            if (c) {
+                init();
+            }
+        });
     }
-});
+}
+
+// Initial check on page load
+changeWithWindowSize();
+
+// Add event listener for window resize
+window.addEventListener('resize', changeWithWindowSize);
+
 
 // Independent Event Listeners. (They must happen no matter what).
 
