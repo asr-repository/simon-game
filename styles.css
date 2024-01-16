@@ -1,4 +1,6 @@
 body {
+  margin: 0;
+  padding: 0;
   text-align: center;
   background-color: #011F3F;
 }
@@ -12,17 +14,27 @@ body {
 
 .container {
   display: block;
-  width: 50%;
+  width: 80%;
+  /* Adjusted width for better responsiveness */
   margin: auto;
 }
 
 .btn {
-  margin: 25px;
+  margin: 2%;
+  /* Adjusted margin for better spacing */
   display: inline-block;
-  height: 200px;
-  width: 200px;
-  border: 10px solid black;
+  height: 18vw;
+  /* Adjusted height as a percentage of viewport width */
+  width: 18vw;
+  /* Adjusted width as a percentage of viewport width */
+  max-height: 200px;
+  min-height: 150px;
+  max-width: 200px;
+  min-width: 150px;
+  border: 5px solid black;
   border-radius: 20%;
+  font-size: 1.5vw;
+  /* Adjusted font size as a percentage of viewport width */
 }
 
 .game-over {
@@ -47,6 +59,33 @@ body {
 }
 
 .pressed {
-  box-shadow: 0 0 20px white;
+  box-shadow: 0 0 10px white;
   background-color: grey;
+}
+
+.start-button {
+  background-color: #FEF2BF;
+  color: #011F3F;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.5rem;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 600px) {
+  .btn {
+    height: 25vw;
+    width: 25vw;
+    font-size: 3vw;
+    margin: 2%;
+  }
+}
+
+/* Media query to hide the start button on screens wider than 600px */
+@media screen and (min-width: 601px) {
+  .start-button {
+    display: none;
+  }
 }

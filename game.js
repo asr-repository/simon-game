@@ -25,7 +25,7 @@ function setupNextPattern() {
     var randomChosenColour = buttonColors[Math.floor(Math.random() * 4)];
     randomPattern.push(randomChosenColour);
     setTimeout(flashLastColorRandomPattern, 500);
-    setTimeout(function () { allowClick = true }, 900);
+    setTimeout(() => { allowClick = true }, 900);
 }
 
 // 2. To flash the newly added color in the Random Pattern Array:
@@ -72,6 +72,15 @@ function clickResponse(color) {
 $(document).keydown(function () {
     if (c) {
         init();
+    }
+});
+
+// Event listener for the start button
+$("#start-btn").on("click", function () {
+    if (c) {
+        init();
+        // Disable the start button to avoid multiple initiations
+        $(this).prop("disabled", true);
     }
 });
 
