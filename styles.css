@@ -7,8 +7,8 @@ body {
 
 #level-title {
   font-family: 'Press Start 2P', cursive;
-  font-size: 3rem;
-  margin: 5%;
+  font-size: 2.5rem;
+  margin: 5% 3%;
   color: #FEF2BF;
 }
 
@@ -75,7 +75,7 @@ body {
 }
 
 /* Media query for smaller screens */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 728px) {
   .btn {
     min-width: 100px;
     min-height: 100px;
@@ -84,10 +84,14 @@ body {
     font-size: 3vw;
     margin: 2%;
   }
+
+  #level-title {
+    font-size: 2rem;
+  }
 }
 
 /* Media query to hide the start button on screens wider than 600px */
-@media screen and (min-width: 601px) {
+@media screen and (min-width: 729px) {
   .start-button {
     display: none;
   }

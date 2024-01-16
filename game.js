@@ -5,6 +5,7 @@ let userClickedPattern = [];
 let level = 0;
 let allowClick = false;
 let c = true;
+let x = true;
 
 // All Functions
 
@@ -13,6 +14,7 @@ function init() {
     // userClickedPattern = [];
     level = 0;
     c = false;
+    x = false;
     setupNextPattern();
 }
 
@@ -61,9 +63,16 @@ function clickResponse(color) {
     if (!checkPattern()) {
         var buzzer = new Audio('./sounds/wrong.mp3');
         buzzer.play();
-        $("#level-title").text("Game Over, Press Any Key to Restart");
         allowClick = false;
         c = true;
+        $("#start-btn").text("Restart!");
+        // Show the start button
+        if (window.innerWidth <= 728) {
+            $("#start-btn").show();
+            $("#level-title").text("Game Over, Press Restart!");
+        } else {
+            $("#level-title").text("Game Over, Press Any Key to Restart");
+        }
     } else if (userClickedPattern.length === randomPattern.length) {
         setupNextPattern();
     }
@@ -75,22 +84,49 @@ $(document).keydown(function () {
     }
 });
 
-// Event listener for the start button
-$("#start-btn").on("click", function () {
-    if (c) {
-        init();
-        // Disable the start button to avoid multiple initiations
-        $(this).prop("disabled", true);
-    }
-});
-
 // Independent Event Listeners. (They must happen no matter what).
 
-// 1. On Clicking The Button Tile:
+function checkWindowSize() {
+    if (!checkPattern()) {
+        if (window.innerWidth <= 728) {
+            $("#level-title").text("Game Over, Press Restart!");
+        } else {
+            $("#level-title").text("Game Over, Press Any Key to Restart");
+        }
+    }
+}
+$(window).resize(checkWindowSize);
+
+// 1. On first time page load
+
+function checkWindowSizeInit() {
+    if (x && window.innerWidth <= 728) {
+        $("#level-title").text("Press the Start Button");
+    } else if (x && window.innerWidth > 728) {
+        $("#level-title").text("Press Any Key to Start");
+    }
+}
+
+// Initial check on page load
+checkWindowSizeInit();
+
+// Add event listener for window resize
+$(window).resize(checkWindowSizeInit);
+
+// 2. On Clicking The Button Tile:
 
 $(`.btn`).on("click", function () {
     let pressedButtonId = $(this).attr('id');
     if (allowClick) {
         clickResponse(pressedButtonId);
+    }
+});
+
+// 3. Event listener for the start button
+$("#start-btn").on("click", function () {
+    if (c) {
+        init();
+        // Hide the start button to avoid multiple initiations
+        $(this).hide();
     }
 });
