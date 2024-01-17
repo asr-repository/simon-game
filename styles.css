@@ -3,6 +3,10 @@ body {
   padding: 0;
   text-align: center;
   background-color: #011F3F;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 #level-title {
@@ -17,18 +21,14 @@ body {
 .container {
   display: block;
   width: 80%;
-  /* Adjusted width for better responsiveness */
   margin: auto;
 }
 
 .btn {
   margin: 2%;
-  /* Adjusted margin for better spacing */
   display: inline-block;
   height: 18vw;
-  /* Adjusted height as a percentage of viewport width */
   width: 18vw;
-  /* Adjusted width as a percentage of viewport width */
   max-height: 200px;
   min-height: 150px;
   max-width: 200px;
@@ -36,7 +36,6 @@ body {
   border: 5px solid black;
   border-radius: 20%;
   font-size: 1.5vw;
-  /* Adjusted font size as a percentage of viewport width */
 }
 
 .game-over {
@@ -72,6 +71,7 @@ body {
   font-family: 'Press Start 2P', cursive;
   font-size: 1.5rem;
   padding: 10px 20px;
+  max-width: max-content;
   border: none;
   cursor: pointer;
 }
@@ -88,6 +88,7 @@ body {
   }
 
   #level-title {
+    margin-top: 100px;
     font-size: 2rem;
     min-height: 100px;
     display: flex;
@@ -96,7 +97,7 @@ body {
   }
 }
 
-/* Media query to hide the start button on screens wider than 600px */
+/* Media query to hide the start button on screens wider than 729px */
 @media screen and (min-width: 729px) {
   .start-button {
     display: none;

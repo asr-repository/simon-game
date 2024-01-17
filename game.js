@@ -24,7 +24,7 @@ function setupNextPattern() {
     level++;
     $("#level-title").text(`Level ${level}`);
     userClickedPattern = [];
-    var randomChosenColour = buttonColors[Math.floor(Math.random() * 4)];
+    let randomChosenColour = buttonColors[Math.floor(Math.random() * 4)];
     randomPattern.push(randomChosenColour);
     setTimeout(flashLastColorRandomPattern, 500);
     setTimeout(() => { allowClick = true }, 900);
@@ -35,7 +35,7 @@ function flashLastColorRandomPattern() {
     $(`#${randomPattern[randomPattern.length - 1]}`).fadeOut(200).fadeIn(200);
 };
 
-// 3. This function will 
+// 3. This function will check if the user's pattern matches the random pattern.
 
 function checkPattern() {
     if (userClickedPattern[userClickedPattern.length - 1] !== randomPattern[userClickedPattern.length - 1]) {
@@ -43,6 +43,15 @@ function checkPattern() {
     }
     return true;
 }
+
+// 4. This function will play audio.
+
+function playSound(sound) {
+    let audio = new Audio(`./sounds/${sound}.mp3`);
+    audio.play();
+}
+
+// 5. This function is invoked after click event has occured and takes pressed button id (which is the color) as argument.
 
 function clickResponse(color) {
 
@@ -57,33 +66,45 @@ function clickResponse(color) {
     }, 100);
 
     if (!checkPattern()) {
-        var buzzer = new Audio('./sounds/wrong.mp3');
-        buzzer.play();
+        // Play Buzzer Sound
+        playSound("wrong");
+
+        // Flash Red Body Background
         $('body').addClass('game-over');
         setTimeout(function () {
             $('body').removeClass('game-over');
         }, 200);
+
+        // Reset Switches
         allowClick = false;
         c = true;
+
+        // Change Mobile Start Button Text to Restart
         $("#start-btn").text("Restart!");
-        // Show the start button
+
+        // Show Updated Start Button (Now Restart Button) and Change h1 Text as per Device
         if (window.innerWidth <= 728) {
             $("#start-btn").show();
             $("#level-title").text("Game Over, Press Restart!");
         } else {
             $("#level-title").text("Game Over, Press Any Key to Restart");
         }
+
     } else if (userClickedPattern.length === randomPattern.length) {
         setupNextPattern();
         // iii-A) Plays audio according to color:
-        var audio = new Audio(`./sounds/${color}.mp3`);
-        audio.play();
+        playSound(color);
     } else {
         // iii-B) Plays audio according to color:
-        var audio = new Audio(`./sounds/${color}.mp3`);
-        audio.play();
+        playSound(color);
     }
 }
+
+
+// Independent Event Listeners. (They must happen no matter what).
+
+
+// 1. Set Event Listener for Keydown Event on Document and Click Event on Start Button if the Game has Started or Restarted (i.e. c = true)
 
 $(document).keydown(function () {
     if (c) {
@@ -91,20 +112,16 @@ $(document).keydown(function () {
     }
 });
 
-// Independent Event Listeners. (They must happen no matter what).
-
-function checkWindowSize() {
-    if (!checkPattern()) {
-        if (window.innerWidth <= 728) {
-            $("#level-title").text("Game Over, Press Restart!");
-        } else {
-            $("#level-title").text("Game Over, Press Any Key to Restart");
-        }
+$("#start-btn").on("click", function () {
+    if (c) {
+        init();
+        // Hide the start button to avoid multiple initiations
+        $(this).hide();
     }
-}
-$(window).resize(checkWindowSize);
+});
 
-// 1. On first time page load
+
+// 2. Set Initial h1 Text and Set Event Listener to Change h1 Text Based on Device Window Size
 
 function checkWindowSizeInit() {
     if (x && window.innerWidth <= 728) {
@@ -114,13 +131,14 @@ function checkWindowSizeInit() {
     }
 }
 
-// Initial check on page load
+// A) Set Initial h1 Text on Page Load
 checkWindowSizeInit();
 
-// Add event listener for window resize
+// B) Set Event Listener to Change h1 Text Based on Device Window Size
 $(window).resize(checkWindowSizeInit);
 
-// 2. On Clicking The Button Tile:
+
+// 3. Set Event Listener for Clicking The Button Tile:
 
 $(`.btn`).on("click", function () {
     let pressedButtonId = $(this).attr('id');
@@ -129,11 +147,17 @@ $(`.btn`).on("click", function () {
     }
 });
 
-// 3. Event listener for the start button
-$("#start-btn").on("click", function () {
-    if (c) {
-        init();
-        // Hide the start button to avoid multiple initiations
-        $(this).hide();
+
+// 4. Set Event Listener to Change h1 After Game Over Based on Device Window Size
+
+function checkWindowSize() {
+    if (!checkPattern()) {
+        if (window.innerWidth <= 728) {
+            $("#start-btn").show();
+            $("#level-title").text("Game Over, Press Restart!");
+        } else {
+            $("#level-title").text("Game Over, Press Any Key to Restart");
+        }
     }
-});
+}
+$(window).resize(checkWindowSize);
