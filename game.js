@@ -26,8 +26,8 @@ function setupNextPattern() {
     userClickedPattern = [];
     let randomChosenColour = buttonColors[Math.floor(Math.random() * 4)];
     randomPattern.push(randomChosenColour);
-    setTimeout(flashLastColorRandomPattern, 500);
-    setTimeout(() => { allowClick = true }, 900);
+    setTimeout(flashLastColorRandomPattern, 1000);
+    setTimeout(() => { allowClick = true }, 1400);
 }
 
 // 2. To flash the newly added color in the Random Pattern Array:
