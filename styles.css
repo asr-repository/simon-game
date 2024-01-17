@@ -11,6 +11,7 @@ body {
   margin: 5% 3%;
   color: #FEF2BF;
   min-height: 30px;
+  transition: all 0.3s ease;
 }
 
 .container {

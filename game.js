@@ -46,14 +46,10 @@ function checkPattern() {
 
 function clickResponse(color) {
 
-    // i) Plays audio according to color:
-    var audio = new Audio(`./sounds/${color}.mp3`);
-    audio.play();
-
-    // ii) Pushes the pressed button's color into the User Clicked Pattern Array:
+    // i) Pushes the pressed button's color into the User Clicked Pattern Array:
     userClickedPattern.push(color);
 
-    // iii) Adds momentary class to the pressed button for 100 ms:
+    // ii) Adds momentary class to the pressed button for 100 ms:
     $(`#${color}`).addClass('pressed');
 
     setTimeout(function () {
@@ -63,6 +59,10 @@ function clickResponse(color) {
     if (!checkPattern()) {
         var buzzer = new Audio('./sounds/wrong.mp3');
         buzzer.play();
+        $('body').addClass('game-over');
+        setTimeout(function () {
+            $('body').removeClass('game-over');
+        }, 200);
         allowClick = false;
         c = true;
         $("#start-btn").text("Restart!");
@@ -75,6 +75,13 @@ function clickResponse(color) {
         }
     } else if (userClickedPattern.length === randomPattern.length) {
         setupNextPattern();
+        // iii-A) Plays audio according to color:
+        var audio = new Audio(`./sounds/${color}.mp3`);
+        audio.play();
+    } else {
+        // iii-B) Plays audio according to color:
+        var audio = new Audio(`./sounds/${color}.mp3`);
+        audio.play();
     }
 }
 
